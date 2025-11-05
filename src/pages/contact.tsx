@@ -1,0 +1,88 @@
+import { useState, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
+
+export default function Contact() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    console.log('Form submitted:', form)
+    alert('Form submitted! (Check console)')
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 py-12">
+      <div className="max-w-md w-full mx-auto p-8 space-y-8">
+        <div className="text-center">
+          <h1 className="text-5xl font-bold text-white mb-2">Contact</h1>
+          <p className="text-gray-400">Get in touch with us</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+              Name
+            </label>
+            <input
+              id="name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              type="text"
+              required
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="John Doe"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              Email
+            </label>
+            <input
+              id="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              type="email"
+              required
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="john@example.com"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+              Message
+            </label>
+            <textarea
+              id="message"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              required
+              rows={4}
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              placeholder="Your message..."
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200"
+          >
+            Send Message
+          </button>
+        </form>
+
+        <Link
+          to="/"
+          className="block text-center text-gray-400 hover:text-white transition-colors"
+        >
+          ← Back to Home
+        </Link>
+      </div>
+    </div>
+  )
+}

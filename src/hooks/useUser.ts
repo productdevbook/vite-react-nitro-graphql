@@ -1,5 +1,4 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
-import { useMemo } from 'react'
 import { $sdk } from '../graphql/default/ofetch'
 import { isType, isError, isUserNotFoundError, isUnauthorizedError } from '../utils/graphql-helpers'
 
@@ -24,8 +23,7 @@ import { isType, isError, isUserNotFoundError, isUnauthorizedError } from '../ut
  * ```
  */
 export function useUser(userId: string = '1') {
-  // Query returns UserResult union type
-  const { data: userResult, isLoading, error, refetch } = useQuery({
+  const query = useQuery({
     queryKey: ['user', userId],
     queryFn: async () => {
       const result = await $sdk.test({ id: userId })
@@ -41,67 +39,29 @@ export function useUser(userId: string = '1') {
     staleTime: 5000,
   })
 
-  // Memoized properties for type-safe discrimination
-  const isSuccess = useMemo(() =>
-    userResult ? isType(userResult, 'User') : false,
-    [userResult]
-  )
+  const { data: userResult } = query
 
-  const isNotFound = useMemo(() =>
-    userResult ? isUserNotFoundError(userResult) : false,
-    [userResult]
-  )
-
-  const isUnauthorized = useMemo(() =>
-    userResult ? isUnauthorizedError(userResult) : false,
-    [userResult]
-  )
-
-  const isErrorResult = useMemo(() =>
-    userResult ? isError(userResult) : false,
-    [userResult]
-  )
+  // Type-safe discrimination properties
+  const isSuccess = userResult ? isType(userResult, 'User') : false
+  const isNotFound = userResult ? isUserNotFoundError(userResult) : false
+  const isUnauthorized = userResult ? isUnauthorizedError(userResult) : false
+  const isErrorResult = userResult ? isError(userResult) : false
 
   // Extract user data (only available when success)
-  const user = useMemo(() =>
-    isSuccess && userResult?.__typename === 'User'
-      ? userResult
-      : null,
-    [isSuccess, userResult]
-  )
+  const user = isSuccess && userResult?.__typename === 'User' ? userResult : null
 
   // Extract error message (available for any error type)
-  const errorMessage = useMemo(() =>
-    isErrorResult && userResult && 'message' in userResult
-      ? userResult.message
-      : null,
-    [isErrorResult, userResult]
-  )
+  const errorMessage = isErrorResult && userResult && 'message' in userResult ? userResult.message : null
 
   return {
-    // Raw result (includes __typename and all union members)
+    ...query,
     userResult,
-
-    // Extracted user data (null if error)
     user,
-
-    // Loading state
-    isLoading,
-
-    // System error (network, server crash)
-    error,
-
-    // Type discrimination flags
     isSuccess,
     isNotFound,
     isUnauthorized,
     isErrorResult,
-
-    // Extracted error message
     errorMessage,
-
-    // Refetch function
-    refetch,
   }
 }
 

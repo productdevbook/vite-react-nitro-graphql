@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import HelloWorld from '../components/HelloWorld'
-import vueLogoSvg from '../assets/vue.svg'
+import reactLogoSvg from '../assets/react.svg'
 
 export default function Home() {
   return (
@@ -29,7 +29,7 @@ export default function Home() {
             className="block transition-transform hover:-translate-y-2 duration-300"
           >
             <img
-              src={vueLogoSvg}
+              src={reactLogoSvg}
               width="128"
               height="128"
               className="h-32 hover:drop-shadow-[0_0_3rem_#61dafbaa]"

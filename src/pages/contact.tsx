@@ -2,15 +2,13 @@ import { useState, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Contact() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', form)
+    console.log('Form submitted:', { name, email, message })
     alert('Form submitted! (Check console)')
   }
 
@@ -29,8 +27,8 @@ export default function Contact() {
             </label>
             <input
               id="name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               type="text"
               required
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -44,8 +42,8 @@ export default function Contact() {
             </label>
             <input
               id="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               required
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -59,8 +57,8 @@ export default function Contact() {
             </label>
             <textarea
               id="message"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               required
               rows={4}
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"

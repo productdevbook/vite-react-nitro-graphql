@@ -24,24 +24,6 @@ export function isType<T extends { __typename?: string }>(
 }
 
 /**
- * Type guard to check if a result is a success type (not an error)
- * Useful when you have multiple success types in a union
- *
- * @example
- * ```ts
- * if (isSuccess(result, 'User')) {
- *   // Handle success case
- * }
- * ```
- */
-export function isSuccess<T extends { __typename?: string }>(
-  result: T,
-  successTypename: string
-): result is T & { __typename: typeof successTypename } {
-  return result.__typename === successTypename
-}
-
-/**
  * Type guard to check if a result implements the Error interface
  * Works for any error type that has a message field
  *

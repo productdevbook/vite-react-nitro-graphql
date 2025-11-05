@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useMemo, ReactNode } from 'react'
 
 interface ErrorOverlayContextType {
   isVisible: boolean
@@ -27,8 +27,13 @@ export function ErrorOverlayProvider({ children }: { children: ReactNode }) {
     window.location.reload()
   }
 
+  const value = useMemo(
+    () => ({ isVisible, errorMessage, show, hide, reload }),
+    [isVisible, errorMessage]
+  )
+
   return (
-    <ErrorOverlayContext.Provider value={{ isVisible, errorMessage, show, hide, reload }}>
+    <ErrorOverlayContext.Provider value={value}>
       {children}
     </ErrorOverlayContext.Provider>
   )

@@ -27,10 +27,6 @@ export default function PiniaColadaDemo() {
     refetch,
   } = useUser(userId)
 
-  function testUserId(id: string) {
-    setUserId(id)
-  }
-
   return (
     <div className="min-h-screen bg-slate-950 p-8">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -62,7 +58,7 @@ export default function PiniaColadaDemo() {
             {testCases.map((testCase) => (
               <button
                 key={testCase.id}
-                onClick={() => testUserId(testCase.id)}
+                onClick={() => setUserId(testCase.id)}
                 className={`p-4 rounded-lg border-2 text-left transition-all ${
                   userId === testCase.id
                     ? 'border-blue-500 bg-blue-900/30'
@@ -83,7 +79,7 @@ export default function PiniaColadaDemo() {
               Query Result
             </h2>
             <button
-              onClick={() => refetch()}
+              onClick={refetch}
               disabled={isLoading}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white text-sm font-medium rounded transition-colors duration-200"
             >
@@ -102,7 +98,7 @@ export default function PiniaColadaDemo() {
           )}
 
           {/* System Error (Network, Server Crash, etc.) */}
-          {error && !isLoading && (
+          {error && (
             <div className="text-red-400 p-4 bg-red-900/20 rounded-lg">
               <div className="font-semibold mb-2">System Error</div>
               <div>{error.message}</div>
@@ -113,7 +109,7 @@ export default function PiniaColadaDemo() {
           )}
 
           {/* Union Type Results */}
-          {userResult && !isLoading && !error && (
+          {userResult && !error && (
             <div className="space-y-4">
               {/* Type Badge */}
               <div className="flex items-center gap-2">

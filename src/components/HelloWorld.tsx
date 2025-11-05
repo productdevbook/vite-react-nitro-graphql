@@ -25,13 +25,13 @@ export default function HelloWorld({ msg }: HelloWorldProps) {
           </div>
         )}
 
-        {error && !loading && (
+        {error && (
           <div className="text-red-400">
             Error: {error.message}
           </div>
         )}
 
-        {user && !loading && (
+        {user && (
           <div className="space-y-2 text-gray-300">
             <p><span className="text-gray-400">ID:</span> {user.id}</p>
             <p><span className="text-gray-400">Name:</span> {user.name}</p>
@@ -40,7 +40,7 @@ export default function HelloWorld({ msg }: HelloWorldProps) {
         )}
 
         <button
-          onClick={() => refetch()}
+          onClick={refetch}
           className="mt-4 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded transition-colors duration-200"
         >
           Refresh

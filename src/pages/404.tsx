@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom'
 export default function NotFound() {
   const navigate = useNavigate()
 
-  const goHome = () => {
-    navigate('/')
-  }
-
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-8">
       <div className="max-w-2xl w-full space-y-8">
@@ -26,7 +22,7 @@ export default function NotFound() {
         {/* Actions */}
         <div className="flex gap-4 justify-center">
           <button
-            onClick={goHome}
+            onClick={() => navigate('/')}
             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
           >
             Go to Home

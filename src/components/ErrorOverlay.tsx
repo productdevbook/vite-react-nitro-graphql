@@ -4,10 +4,6 @@ import { useErrorOverlay } from '../contexts/ErrorOverlayContext'
 export default function ErrorOverlay() {
   const { isVisible, errorMessage, reload } = useErrorOverlay()
 
-  const goHome = () => {
-    window.location.href = '/'
-  }
-
   if (!isVisible) return null
 
   return createPortal(
@@ -44,7 +40,7 @@ export default function ErrorOverlay() {
             Reload Page
           </button>
           <button
-            onClick={goHome}
+            onClick={() => window.location.href = '/'}
             className="w-full px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium rounded-lg transition-colors"
           >
             Go Home
